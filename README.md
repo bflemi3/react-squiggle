@@ -12,7 +12,7 @@ npm install --save react-squiggle
 yarn add react-squiggle
 ```
 
-## Usage
+## General Usage
 
 ```jsx
 import { useField, useForm, validators } from 'react-squiggle'
@@ -60,7 +60,6 @@ const MyForm = () => {
                 type='text'
                 id='name'
                 name='name'
-                value={nameField.value}
             />
             <button type='submit'>Submit</button>
         </form>
@@ -121,13 +120,27 @@ const confirmPasswordField = useField({
 });
 ```
 
-### Delayed field validation
+## useField Usage
 
-### Validations
+```
+useField({ name, form, validations? = [], validatesOn? = 'blur', initialValue? = '' })
+```
 
-This library comes with a set of common validators. Each validator accepts an optional invalid message and returns a validator function `(value, formData) => string`. If a custom invalid message isn't provided, each validator has a default invalid message.
+useField provides an api to be used in a react component.
 
-#### validators.between(message?, [min, max]): (value, formData) => string
+### bind: { name, value, onChange, onBlur? }
+
+The bind property is meant to be bound with the react component directly. If `validateOn` is set to 'blur' then onBlur will be provided as well.
+```jsx
+const field = useField({ name: 'firstName', form });
+return <input {...field.bind} type='text' />
+```
+
+## Out-of-the-box Validations
+
+This library comes with a set of common validators. Each validator accepts [at least] an optional invalid message and returns a validator function `(value, formData) => string`. If a custom invalid message isn't provided, each validator has a default invalid message.
+
+### validators.between(message?, [min, max]): (value, formData) => string
 
 Default message: 
 > Must be between {min} and {max}
@@ -142,7 +155,7 @@ const integerField = useField({
 });
 ```
 
-#### validators.betweenLength(message?, [min, max]): (value, formData) => string
+### validators.betweenLength(message?, [min, max]): (value, formData) => string
 
 Default message: 
 > Must have length between {min} and {max}
@@ -157,7 +170,7 @@ const stringField = useField({
 });
 ```
 
-#### validators.decimal(message?): (value, formData) => string
+### validators.decimal(message?): (value, formData) => string
 
 Default message: 
 > Enter a valid decimal
@@ -171,7 +184,7 @@ const numberField = useField({
 });
 ```
 
-#### validators.email(message?): (value, formData) => string
+### validators.email(message?): (value, formData) => string
 
 Default message: 
 > Enter a valid email
@@ -186,7 +199,7 @@ const emailField = useField({
 
 ```
 
-#### validators.integer(message?): (value, formData) => string
+### validators.integer(message?): (value, formData) => string
 
 Default message: 
 > Enter a valid whole number
@@ -200,7 +213,7 @@ const numberField = useField({
 });
 ```
 
-#### validators.matchesField(message?, field): (value, formData) => string
+### validators.matchesField(message?, field): (value, formData) => string
 
 Default message: 
 > Must match {field.id}
@@ -214,7 +227,7 @@ const confirmPasswordField = useField({
 });
 ```
 
-#### validators.max(message?, max): (value, formData) => string
+### validators.max(message?, max): (value, formData) => string
 
 Default message: 
 > Cannot be greater than {max}
@@ -229,7 +242,7 @@ const integerField = useField({
 });
 ```
 
-#### validators.maxLength(message?, max): (value, formData) => string
+### validators.maxLength(message?, max): (value, formData) => string
 
 Default message: 
 > Cannot have length greater than {max}
@@ -244,7 +257,7 @@ const stringField = useField({
 });
 ```
 
-#### validators.min(message?, min): (value, formData) => string
+### validators.min(message?, min): (value, formData) => string
 
 Default message: 
 > Cannot be less than {min}
@@ -259,7 +272,7 @@ const integerField = useField({
 });
 ```
 
-#### validators.minLength(message?, min): (value, formData) => string
+### validators.minLength(message?, min): (value, formData) => string
 
 Default message: 
 > Cannot have length less than {min}
@@ -274,7 +287,7 @@ const stringField = useField({
 });
 ```
 
-#### validators.required(message?): (value, formData) => string
+### validators.required(message?): (value, formData) => string
 
 Default message:
 > Field is required
@@ -289,7 +302,7 @@ const nameField = useField({
 
 ```
 
-#### validators.string(message?): (value, formData) => string
+### validators.string(message?): (value, formData) => string
 
 Default message: 
 > Enter a valid string
