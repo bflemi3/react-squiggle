@@ -15,7 +15,7 @@ yarn add react-squiggle
 ## Usage
 
 ```jsx
-import { useField, useForm, validators } from 'reac-squiggle'
+import { useField, useForm, validators } from 'react-squiggle'
 ```
 
 ### A simple example
