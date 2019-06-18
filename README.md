@@ -186,7 +186,7 @@ Contains all invalid messages. Will be an empty array when the field is valid.
 
 Manually sets errors for the field. This method will also set valid to false.
 
-## `useForm Usage`
+## `useForm` Usage
 
 ```typescript
 useForm({ onSubmit: (formData: object) => void })
