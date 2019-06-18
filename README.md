@@ -209,6 +209,10 @@ Adds a field to the form.
 #### bind: { onSubmit: (formData: object) => void}
 
 The bind property is meant to be bound with an HTML form element or React component directly.
+```jsx
+const form = useForm({ onSubmit: formData => { ...} });
+return <form {...form.bind}> ... </form>
+```
 
 #### error: string
 
