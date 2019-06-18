@@ -105,7 +105,7 @@ const confirmPasswordField = useField({
 });
 ```
 
-## `useField` Usage
+## `useField`
 
 ```typescript
 useField({  
@@ -183,7 +183,7 @@ Contains all invalid messages. Will be an empty array when the field is valid.
 
 Manually sets errors for the field. This method will also set valid to false.
 
-## `useForm` Usage
+## `useForm`
 
 ```typescript
 useForm({ onSubmit: (formData: object) => void })
@@ -235,11 +235,11 @@ The validity of the form. `valid` is evaluated with each form submission and whe
 
 Will only be true while the form is validating fields during a form submission.
 
-## Out-of-the-box Validations
+## `validators`
 
 This library comes with a set of common validators. Each validator accepts [at least] an optional invalid message and returns a validator function `(value, formData) => string`. If a custom invalid message isn't provided, each validator has a default invalid message.
 
-#### `validators.between(message?, [min, max]): (value, formData) => string`
+#### `between(message?, [min, max]): (value, formData) => string`
 
 Default message: 
 > Must be between {min} and {max}
@@ -254,7 +254,7 @@ const integerField = useField({
 });
 ```
 
-#### `validators.betweenLength(message?, [min, max]): (value, formData) => string`
+#### `betweenLength(message?, [min, max]): (value, formData) => string`
 
 Default message: 
 > Must have length between {min} and {max}
@@ -269,7 +269,7 @@ const stringField = useField({
 });
 ```
 
-#### `validators.decimal(message?): (value, formData) => string`
+#### `decimal(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid decimal
@@ -283,7 +283,7 @@ const numberField = useField({
 });
 ```
 
-#### `validators.email(message?): (value, formData) => string`
+#### `email(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid email
@@ -298,7 +298,7 @@ const emailField = useField({
 
 ```
 
-#### `validators.integer(message?): (value, formData) => string`
+#### `integer(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid whole number
@@ -312,7 +312,7 @@ const numberField = useField({
 });
 ```
 
-#### `validators.matchesField(message?, field): (value, formData) => string`
+#### `matchesField(message?, field): (value, formData) => string`
 
 Default message: 
 > Must match {field.id}
@@ -326,7 +326,7 @@ const confirmPasswordField = useField({
 });
 ```
 
-#### `validators.max(message?, max): (value, formData) => string`
+#### `max(message?, max): (value, formData) => string`
 
 Default message: 
 > Cannot be greater than {max}
@@ -341,7 +341,7 @@ const integerField = useField({
 });
 ```
 
-#### `validators.maxLength(message?, max): (value, formData) => string`
+#### `maxLength(message?, max): (value, formData) => string`
 
 Default message: 
 > Cannot have length greater than {max}
@@ -356,7 +356,7 @@ const stringField = useField({
 });
 ```
 
-#### `validators.min(message?, min): (value, formData) => string`
+#### `min(message?, min): (value, formData) => string`
 
 Default message: 
 > Cannot be less than {min}
@@ -371,7 +371,7 @@ const integerField = useField({
 });
 ```
 
-#### `validators.minLength(message?, min): (value, formData) => string`
+#### `minLength(message?, min): (value, formData) => string`
 
 Default message: 
 > Cannot have length less than {min}
@@ -386,7 +386,7 @@ const stringField = useField({
 });
 ```
 
-#### `validators.required(message?): (value, formData) => string`
+#### `required(message?): (value, formData) => string`
 
 Default message:
 > Field is required
@@ -401,7 +401,7 @@ const nameField = useField({
 
 ```
 
-#### `validators.string(message?): (value, formData) => string`
+#### `string(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid string
