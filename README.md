@@ -14,15 +14,12 @@ yarn add react-squiggle
 
 ## General Usage
 
-```jsx
-import { useField, useForm, validators } from 'react-squiggle'
-```
-
-### A simple example
-
 This example simulates an async form submission. By default, fields are validated on blur and when the form is submitted.
 
 ```jsx
+import React from 'react'
+import { useField, useForm, validators } from 'react-squiggle'
+
 const MyForm = () => {
     const form = useForm({
         onSubmit: async (formData) => {
