@@ -12,7 +12,7 @@ npm install --save react-squiggle
 yarn add react-squiggle
 ```
 
-## General Usage
+## Usage
 
 This example simulates an async form submission. By default, fields are validated on blur and when the form is submitted.
 
