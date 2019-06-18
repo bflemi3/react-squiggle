@@ -242,7 +242,7 @@ Will only be true while the form is validating fields during a form submission.
 
 This library comes with a set of common validators. Each validator accepts [at least] an optional invalid message and returns a validator function `(value, formData) => string`. If a custom invalid message isn't provided, each validator has a default invalid message.
 
-### `validators.between(message?, [min, max]): (value, formData) => string`
+#### `validators.between(message?, [min, max]): (value, formData) => string`
 
 Default message: 
 > Must be between {min} and {max}
@@ -257,7 +257,7 @@ const integerField = useField({
 });
 ```
 
-### `validators.betweenLength(message?, [min, max]): (value, formData) => string`
+#### `validators.betweenLength(message?, [min, max]): (value, formData) => string`
 
 Default message: 
 > Must have length between {min} and {max}
@@ -272,7 +272,7 @@ const stringField = useField({
 });
 ```
 
-### `validators.decimal(message?): (value, formData) => string`
+#### `validators.decimal(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid decimal
@@ -286,7 +286,7 @@ const numberField = useField({
 });
 ```
 
-### `validators.email(message?): (value, formData) => string`
+#### `validators.email(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid email
@@ -301,7 +301,7 @@ const emailField = useField({
 
 ```
 
-### `validators.integer(message?): (value, formData) => string`
+#### `validators.integer(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid whole number
@@ -315,7 +315,7 @@ const numberField = useField({
 });
 ```
 
-### `validators.matchesField(message?, field): (value, formData) => string`
+#### `validators.matchesField(message?, field): (value, formData) => string`
 
 Default message: 
 > Must match {field.id}
@@ -329,7 +329,7 @@ const confirmPasswordField = useField({
 });
 ```
 
-### `validators.max(message?, max): (value, formData) => string`
+#### `validators.max(message?, max): (value, formData) => string`
 
 Default message: 
 > Cannot be greater than {max}
@@ -344,7 +344,7 @@ const integerField = useField({
 });
 ```
 
-### `validators.maxLength(message?, max): (value, formData) => string`
+#### `validators.maxLength(message?, max): (value, formData) => string`
 
 Default message: 
 > Cannot have length greater than {max}
@@ -359,7 +359,7 @@ const stringField = useField({
 });
 ```
 
-### `validators.min(message?, min): (value, formData) => string`
+#### `validators.min(message?, min): (value, formData) => string`
 
 Default message: 
 > Cannot be less than {min}
@@ -374,7 +374,7 @@ const integerField = useField({
 });
 ```
 
-### `validators.minLength(message?, min): (value, formData) => string`
+#### `validators.minLength(message?, min): (value, formData) => string`
 
 Default message: 
 > Cannot have length less than {min}
@@ -389,7 +389,7 @@ const stringField = useField({
 });
 ```
 
-### `validators.required(message?): (value, formData) => string`
+#### `validators.required(message?): (value, formData) => string`
 
 Default message:
 > Field is required
@@ -404,7 +404,7 @@ const nameField = useField({
 
 ```
 
-### `validators.string(message?): (value, formData) => string`
+#### `validators.string(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid string
