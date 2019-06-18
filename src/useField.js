@@ -3,12 +3,6 @@ import PropTypes from 'prop-types'
 import { isNil, debounce } from 'lodash'
 import { formPropType } from './customPropTypes'
 
-const defaultOptions = { 
-    initialValue: '',
-    validateOn: 'blur', 
-    validators: [] 
-};
-
 const initialState = {
     value: '',
     errors: [],
@@ -48,7 +42,7 @@ const useField = ({ name, form, validators, initialValue, validateOn }) => {
         if (validateOn === 'change') debouncedValidate(value);        
     }
 
-    // onBlur will only be part of the bind property (and thus called) if validateOn is set to 'blur'
+    // onBlur will only be a property of bind (and thus called) if validateOn is set to 'blur'
     const onBlur = ({ target: { value } }) => debouncedValidate(value);
 
     // manually set errors

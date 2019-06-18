@@ -21,9 +21,7 @@ export default () => {
     const classes = useStyles();
 
     const form = useForm({
-        onSubmit: async (formData, valid) => {
-            if (!valid) alert('This form is not valid!');
-
+        onSubmit: async (formData) => {
             // simulate async form submit
             await timeout(2000);
 

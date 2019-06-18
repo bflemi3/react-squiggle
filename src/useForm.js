@@ -1,5 +1,6 @@
 import { useReducer, useRef } from 'react'
 import PropTypes from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
 
 const initialState = {
     valid: false,
@@ -49,7 +50,7 @@ const useForm = ({ onSubmit }) => {
         // otherwise submit the form
         try {
             const formData = fields.current.reduce(toFormData, {});
-            await Promise.resolve(onSubmit(formData, valid));
+            await Promise.resolve(onSubmit(formData));
             dispatch({ type: 'SUBMIT_REQUEST_DONE' });
         } catch (e) {
             console.error(e.message);
@@ -61,10 +62,13 @@ const useForm = ({ onSubmit }) => {
 
     const removeField = name => { fields.current = fields.current.filter(f => f.id !== name) }
 
-    const setErrors = (errors = {}) => Object.entries(errors).forEach(([fieldName, messages]) => {
-        const field = fields.current.find(f => f.id === fieldName);
-        if(field) field.setErrors(messages);
-    }) 
+    const setErrors = (errors = {}) => {
+        Object.entries(errors).forEach(([fieldName, messages]) => {
+            const field = fields.current.find(f => f.id === fieldName);
+            if(field) field.setErrors(messages);
+        });
+        dispatch({ type: 'SUBMIT_VALIDATE_DONE', valid: isEmpty(errors) })
+    } 
 
     return {
         ...state,

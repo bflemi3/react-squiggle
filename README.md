@@ -25,13 +25,11 @@ This example simulates an async form submission. By default, fields are validate
 ```jsx
 const MyForm = () => {
     const form = useForm({
-        onSubmit: async (formData, valid) => {
-            if(!valid) alert('This form is not valid!');
-
+        onSubmit: async (formData) => {
             // simulate async form submit
             await timeout(2000);
 
-            // simulate 400 from server
+            // simulate 400 from the server
             if(formData.email.length < 10) {
                 form.setErrors({ email: 'Email must be at least 10 characters' });
                 return;
@@ -47,7 +45,7 @@ const MyForm = () => {
         form,
         validations: [
             validators.required('Name is required'),
-            value => !/[a-zA-Z\s]*/.test(value) && 'Name must contain only letters and spaces'
+            value => !/[a-zA-Z\s]*/.test(value) && 'Name can contain only letters and spaces'
         ]
     });
 
@@ -71,13 +69,8 @@ const MyForm = () => {
 
 ```jsx
 const nameField = useField({
-    name: 'name',
-    form,
-    validateOn: 'change',
-    validations: [
-        validators.required('Name is required'),
-        value => !/[a-zA-Z\s]*/.test(value) && 'Name must contain only letters and spaces'
-    ]
+   ...,
+    validateOn: 'change'
 });
 ```
 
@@ -85,13 +78,8 @@ const nameField = useField({
 
 ```jsx
 const nameField = useField({
-    name: 'name',
-    form,
-    validateOn: 'submit',
-    validations: [
-        validators.required('Name is required'),
-        value => !/[a-zA-Z\s]*/.test(value) && 'Name must contain only letters and spaces'
-    ]
+    ...,
+    validateOn: 'submit'
 });
 ```
 
@@ -114,7 +102,7 @@ const confirmPasswordField = useField({
     form,
     validations: [
         (value, { password }) => value !== password && `Woops, this doesn't match your password`
-        // you can also use the `matchesField` validator provided with the library
+        // You can also use the `matchesField` validator provided with the library
         // validators.matchesField(`Woops, this doesn't match your password`, passwordField)
     ]
 });
@@ -122,19 +110,129 @@ const confirmPasswordField = useField({
 
 ## useField Usage
 
+```typescript
+useField({ 
+    name: string, 
+    form: object, 
+    validations?: Array<(value, formData) => string> = [], 
+    validatesOn?: string = 'blur', 
+    initialValue?: any = '' 
+})
 ```
-useField({ name, form, validations? = [], validatesOn? = 'blur', initialValue? = '' })
-```
 
-useField provides an api to be used in a react component.
+### Props
 
-### bind: { name, value, onChange, onBlur? }
+#### form: object
 
-The bind property is meant to be bound with the react component directly. If `validateOn` is set to 'blur' then onBlur will be provided as well.
+The form api provided from `useForm`.
+
+#### initialValue?: any = ''
+
+The initial value of the field. If left blank, the default value is an empty string.
+
+#### name: string
+
+The name of the field
+
+#### validations?: Array<(value, formData) => string>
+
+A collection of functions that give the current value of the field and the rest of the form values. The function should return a message when the field is invalid, otherwise `null`, `undefined` or `false`.
+
+#### validatesOn?: string = 'blur'
+
+Determines when the field is validated. Possible values are `blur` - occurs when the field is blurred; `change` - occurs when the field's `onChange` event is fired; `submit` - occurs only when the forms is submitted. Default value is `blur`.
+
+### API
+
+`useField` provides an api to be used with an HTML element or React component.
+
+#### bind: { name, value, onChange, onBlur? }
+
+The bind property is meant to be bound with the HTML element or React component directly. If `validateOn` is set to 'blur' then `onBlur` will be provided as well.
 ```jsx
 const field = useField({ name: 'firstName', form });
 return <input {...field.bind} type='text' />
 ```
+
+#### id: string
+
+The value of `name` provided to the useField constructor.
+
+#### value: any
+
+The value of the field.
+
+#### pristine: bool = true
+
+Will be true until the field is touched by the user. 
+
+#### validating: bool = false
+
+Will only be true while the field is being validated.
+
+#### valid: bool = true
+
+Initially true. Will be false if the field is determined invalid from its validation functions.
+
+#### validate: () => void
+
+Manually triggers field validation. 
+
+#### errors: string[]
+
+Contains all invalid messages. Will be an empty array when the field is valid.
+
+#### setErrors: (errors: string[]) => void
+
+Manually sets errors for the field. This method will also set valid to false.
+
+## useForm Usage
+
+```typescript
+useForm({ onSubmit: (formData: object) => void })
+```
+
+### Props
+
+#### onSubmit: (formData: object) => void
+
+The `onSubmit` method for the form. If the form is not valid this function will not be called. Instead form submission will halt and all errors will be displayed.
+
+### API
+
+useForm provides an api to be used with a `form` element or React component.
+
+#### addField: (field: object) => void
+
+Adds a field to the form.
+
+#### bind: { onSubmit: (formData: object) => void}
+
+The bind property is meant to be bound with an HTML form element or React component directly.
+
+#### error: string
+
+Any errors that occur related to form submission will be found here.
+
+#### removeField: (name: string) => void
+
+Removes a field from the form. 
+
+#### setErrors: (errors: object = { [key: string]: string | string[] }) => void
+
+This method will set error messages for each key/value pair given. Each key of the errors argument should be the name of a field registered with the form. The value for each key can be an error message or collection of error messages. The matching fields, and the form, will be set to invalid as well.
+
+#### submitting: bool = false
+
+Will only be true while the form is being submitted, meaning the user has submitted the form. The form remains in a submitted state while field validation occurs as well as actual form submission. If the form is found invalid, submitting will go back to false and form submission will end.
+
+#### valid: bool = false
+
+The validity of the form. `valid` is evaluated with each form submission and when `setErrors` is invoked.
+
+#### validating: bool = false
+
+Will only be true while the form is validating fields during a form submission.
 
 ## Out-of-the-box Validations
 
