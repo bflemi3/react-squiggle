@@ -108,45 +108,45 @@ const confirmPasswordField = useField({
 });
 ```
 
-## useField Usage
+## `useField` Usage
 
 ```typescript
-useField({ 
-    name: string, 
+useField({  
     form: object, 
-    validations?: Array<(value, formData) => string> = [], 
-    validatesOn?: string = 'blur', 
-    initialValue?: any = '' 
+    initialValue?: any = ''
+    name: string,
+    validatesOn?: string = 'blur'
+    validations?: Array<(value, formData) => string> = []
 })
 ```
 
 ### Props
 
-#### form: object
+#### `form: object`
 
 The form api provided from `useForm`.
 
-#### initialValue?: any = ''
+#### `initialValue?: any = ''`
 
 The initial value of the field. If left blank, the default value is an empty string.
 
-#### name: string
+#### `name: string`
 
 The name of the field
 
-#### validations?: Array<(value, formData) => string>
-
-A collection of functions that give the current value of the field and the rest of the form values. The function should return a message when the field is invalid, otherwise `null`, `undefined` or `false`.
-
-#### validatesOn?: string = 'blur'
+#### `validatesOn?: string = 'blur'`
 
 Determines when the field is validated. Possible values are `blur` - occurs when the field is blurred; `change` - occurs when the field's `onChange` event is fired; `submit` - occurs only when the forms is submitted. Default value is `blur`.
+
+#### `validations?: Array<(value, formData) => string>`
+
+A collection of functions that give the current value of the field and the rest of the form values. The function should return a message when the field is invalid, otherwise `null`, `undefined` or `false`.
 
 ### API
 
 `useField` provides an api to be used with an HTML element or React component.
 
-#### bind: { name, value, onChange, onBlur? }
+#### `bind: { name, value, onChange, onBlur? }`
 
 The bind property is meant to be bound with the HTML element or React component directly. If `validateOn` is set to 'blur' then `onBlur` will be provided as well.
 ```jsx
@@ -154,39 +154,39 @@ const field = useField({ name: 'firstName', form });
 return <input {...field.bind} type='text' />
 ```
 
-#### id: string
+#### `id: string`
 
 The value of `name` provided to the useField constructor.
 
-#### value: any
+#### `value: any`
 
 The value of the field.
 
-#### pristine: bool = true
+#### `pristine: bool = true`
 
 Will be true until the field is touched by the user. 
 
-#### validating: bool = false
+#### `validating: bool = false`
 
 Will only be true while the field is being validated.
 
-#### valid: bool = true
+#### `valid: bool = true`
 
 Initially true. Will be false if the field is determined invalid from its validation functions.
 
-#### validate: () => void
+#### `validate: () => void`
 
 Manually triggers field validation. 
 
-#### errors: string[]
+#### `errors: string[]`
 
 Contains all invalid messages. Will be an empty array when the field is valid.
 
-#### setErrors: (errors: string[]) => void
+#### `setErrors: (errors: string[]) => void`
 
 Manually sets errors for the field. This method will also set valid to false.
 
-## useForm Usage
+## `useForm Usage`
 
 ```typescript
 useForm({ onSubmit: (formData: object) => void })
@@ -194,7 +194,7 @@ useForm({ onSubmit: (formData: object) => void })
 
 ### Props
 
-#### onSubmit: (formData: object) => void
+#### `onSubmit: (formData: object) => void`
 
 The `onSubmit` method for the form. If the form is not valid this function will not be called. Instead form submission will halt and all errors will be displayed.
 
@@ -202,11 +202,11 @@ The `onSubmit` method for the form. If the form is not valid this function will 
 
 useForm provides an api to be used with a `form` element or React component.
 
-#### addField: (field: object) => void
+#### `addField: (field: object) => void`
 
-Adds a field to the form.
+Adds a field to the form. `useField` calls this method internally when a new field is created.
 
-#### bind: { onSubmit: (formData: object) => void}
+#### `bind: { onSubmit: (formData: object) => void}`
 
 The bind property is meant to be bound with an HTML form element or React component directly.
 ```jsx
@@ -214,27 +214,27 @@ const form = useForm({ onSubmit: formData => { ...} });
 return <form {...form.bind}> ... </form>
 ```
 
-#### error: string
+#### `error: string`
 
 Any errors that occur related to form submission will be found here.
 
-#### removeField: (name: string) => void
+#### `removeField: (name: string) => void`
 
 Removes a field from the form. 
 
-#### setErrors: (errors: object = { [key: string]: string | string[] }) => void
+#### `setErrors: (errors: object = { [key: string]: string | string[] }) => void`
 
 This method will set error messages for each key/value pair given. Each key of the errors argument should be the name of a field registered with the form. The value for each key can be an error message or collection of error messages. The matching fields, and the form, will be set to invalid as well.
 
-#### submitting: bool = false
+#### `submitting: bool = false`
 
 Will only be true while the form is being submitted, meaning the user has submitted the form. The form remains in a submitted state while field validation occurs as well as actual form submission. If the form is found invalid, submitting will go back to false and form submission will end.
 
-#### valid: bool = false
+#### `valid: bool = false`
 
 The validity of the form. `valid` is evaluated with each form submission and when `setErrors` is invoked.
 
-#### validating: bool = false
+#### `validating: bool = false`
 
 Will only be true while the form is validating fields during a form submission.
 
@@ -242,7 +242,7 @@ Will only be true while the form is validating fields during a form submission.
 
 This library comes with a set of common validators. Each validator accepts [at least] an optional invalid message and returns a validator function `(value, formData) => string`. If a custom invalid message isn't provided, each validator has a default invalid message.
 
-### validators.between(message?, [min, max]): (value, formData) => string
+### `validators.between(message?, [min, max]): (value, formData) => string`
 
 Default message: 
 > Must be between {min} and {max}
@@ -257,7 +257,7 @@ const integerField = useField({
 });
 ```
 
-### validators.betweenLength(message?, [min, max]): (value, formData) => string
+### `validators.betweenLength(message?, [min, max]): (value, formData) => string`
 
 Default message: 
 > Must have length between {min} and {max}
@@ -272,7 +272,7 @@ const stringField = useField({
 });
 ```
 
-### validators.decimal(message?): (value, formData) => string
+### `validators.decimal(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid decimal
@@ -286,7 +286,7 @@ const numberField = useField({
 });
 ```
 
-### validators.email(message?): (value, formData) => string
+### `validators.email(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid email
@@ -301,7 +301,7 @@ const emailField = useField({
 
 ```
 
-### validators.integer(message?): (value, formData) => string
+### `validators.integer(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid whole number
@@ -315,7 +315,7 @@ const numberField = useField({
 });
 ```
 
-### validators.matchesField(message?, field): (value, formData) => string
+### `validators.matchesField(message?, field): (value, formData) => string`
 
 Default message: 
 > Must match {field.id}
@@ -329,7 +329,7 @@ const confirmPasswordField = useField({
 });
 ```
 
-### validators.max(message?, max): (value, formData) => string
+### `validators.max(message?, max): (value, formData) => string`
 
 Default message: 
 > Cannot be greater than {max}
@@ -344,7 +344,7 @@ const integerField = useField({
 });
 ```
 
-### validators.maxLength(message?, max): (value, formData) => string
+### `validators.maxLength(message?, max): (value, formData) => string`
 
 Default message: 
 > Cannot have length greater than {max}
@@ -359,7 +359,7 @@ const stringField = useField({
 });
 ```
 
-### validators.min(message?, min): (value, formData) => string
+### `validators.min(message?, min): (value, formData) => string`
 
 Default message: 
 > Cannot be less than {min}
@@ -374,7 +374,7 @@ const integerField = useField({
 });
 ```
 
-### validators.minLength(message?, min): (value, formData) => string
+### `validators.minLength(message?, min): (value, formData) => string`
 
 Default message: 
 > Cannot have length less than {min}
@@ -389,7 +389,7 @@ const stringField = useField({
 });
 ```
 
-### validators.required(message?): (value, formData) => string
+### `validators.required(message?): (value, formData) => string`
 
 Default message:
 > Field is required
@@ -404,7 +404,7 @@ const nameField = useField({
 
 ```
 
-### validators.string(message?): (value, formData) => string
+### `validators.string(message?): (value, formData) => string`
 
 Default message: 
 > Enter a valid string
