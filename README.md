@@ -110,9 +110,9 @@ const confirmPasswordField = useField({
 ```typescript
 useField({  
     form: object, 
-    initialValue?: any = ''
+    initialValue?: any = '',
     name: string,
-    validatesOn?: string = 'blur'
+    validatesOn?: string = 'blur',
     validations?: Array<(value, formData) => string> = []
 })
 ```
